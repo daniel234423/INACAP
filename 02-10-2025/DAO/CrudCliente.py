@@ -21,7 +21,7 @@ def agregar(c):
         con.desconectar()
     except Exception as e:
         print("Error al agregar cliente:", e)
-def editar(e):
+def editar(c):
     try:
         con = Conexion(host, user, password, db)
         sql="UPDATE CLIENTE SET run='{}',nombre='{}',apellido='{}',direccion='{}',fono={},correo='{}',"\
