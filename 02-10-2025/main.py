@@ -48,7 +48,8 @@ def ingresardatos():
     
     tipo = int(input("Ingrese el código del Tipo de cliente: "))
     monto = int(input("INGRESE MONTO CRÉDITO : "))
-    c = Cliente(run, nombre, apellido, direccion, fono, correo, tipo, monto, deuda=0)
+    c = Cliente(run, nombre, apellido, direccion, fono, correo, tipo, monto)
+    print(c)
     DAO.CrudCliente.agregar(c)
 def mostrar():
     while(True):

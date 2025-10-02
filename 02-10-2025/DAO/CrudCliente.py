@@ -1,4 +1,5 @@
 from DAO.Conexion import Conexion
+import time
 
 host = 'localhost'
 user = 'daniel'
@@ -18,6 +19,7 @@ def agregar(c):
         con.ejecuta_query(sql)
         con.commit()
         print("\n\n¡Datos ingresados satisfactoriamente!")
+        time.sleep(2)
         con.desconectar()
     except Exception as e:
         print("Error al agregar cliente:", e)
