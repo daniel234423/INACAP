@@ -1,8 +1,8 @@
 from DAO.Conexion import Conexion
 
 host = 'localhost'
-user = 'userempresa'
-password = 'Ventana.13'
+user = 'daniel'
+password = '234423'
 db = 'empresa'
 
 def agregar(c):
@@ -81,13 +81,16 @@ def consultapartial(cant):
 
 # ---
 def mostrartipos():
+    con = None
     try:
         con = Conexion(host, user, password, db)
-        sql = "select id,nombre from TIPO "
-        cursor=con.ejecuta_query(sql)
-        datos=cursor.fetchall()
+        sql = "SELECT id, nombre FROM TIPO"
+        cursor = con.ejecuta_query(sql)
+        datos = cursor.fetchall()
         con.desconectar()
         return datos
     except Exception as e:
-        con.rollback()
-        print(e)
+        if con:
+            con.rollback()
+        print(f"Error: {e}")
+        return []  # Devuelve una lista vacía en lugar de None

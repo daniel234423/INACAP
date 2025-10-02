@@ -12,10 +12,13 @@ class Conexion:
 
     def ejecuta_query(self, sql):
         self.cursor.execute(sql)
-        return self.cursor()
+        return self.cursor  # Se devuelve el cursor correctamente
+
     def desconectar(self):
         self.db.close()
+
     def commit(self):
         self.db.commit()
+
     def rollback(self):
         self.db.rollback()

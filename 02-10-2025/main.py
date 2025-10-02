@@ -40,7 +40,7 @@ def ingresardatos():
     correo = input("INGRESE CORREO : ")
     
     # recorremos los tipos
-    datos = DAO.CRUDCliente.mostrartipos()
+    datos = DAO.CrudCliente.mostrartipos()
     print("---")
     for dato in datos:
         print(" CÓDIGO : {} - {}".format(dato[0], dato[1]))
@@ -49,7 +49,7 @@ def ingresardatos():
     tipo = int(input("Ingrese el código del Tipo de cliente: "))
     monto = int(input("INGRESE MONTO CRÉDITO : "))
     c = Cliente(run, nombre, apellido, direccion, fono, correo, tipo, monto, deuda=0)
-    DAO.CRUDCliente.agregar(c)
+    DAO.CrudCliente.agregar(c)
 def mostrar():
     while(True):
         menumostrar()
@@ -71,7 +71,7 @@ def mostrartodo():
     print("===============")
     print(" LISTA DE TODOS LOS CLIENTES ")
     print("===============")
-    datos = DAO.CRUDCliente.mostrartodos()
+    datos = DAO.CrudCliente.mostrartodos()
     for dato in datos:
         print(" ID : {} - RUN : {} - NOMBRE : {} - APELLIDO : {} - DIRECCION : {} - FONO : {} - CORREO : {} - MONTO CRÉDITO : {} - DEUDA : {} - TIPO : {} ".format(
             dato[0], dato[1], dato[2], dato[3], dato[4], dato[5], dato[6], dato[7], dato[8], dato[9]))
@@ -83,7 +83,7 @@ def mostraruno():
     print(" MUESTRA DE DATOS PARTICULAR ")
     print("=========================")
     op = int(input("\n Ingrese valor del ID del Cliente que desea Mostrar los Datos : "))
-    datos = DAO.CRUDCliente.consultaparticular(op)
+    datos = DAO.CrudCliente.consultaparticular(op)
     
     print("\n======================================")
     print(" MUESTRA DE DATOS DEL CLIENTE ")
@@ -106,7 +106,7 @@ def mostrarparcial():
     print(" MUESTRA PARCIALMENTE LOS CLIENTES ")  
     print("---")  
     cant = int(input("\nIngrese la cantidad de clientes a Mostrar : "))  
-    datos = DAO.CRUDCliente.consultaparcial(cant)  
+    datos = DAO.CrudCliente.consultaparcial(cant)  
     for dato in datos:  
         print(" ID : {} - RUN : {} - NOMBRE : {} - APELLIDO : {} - DIRECCION : {} - FONO : {} - CORREO : {} - MONTO CRÉDITO : {} - DEUDA : {} - TIPO : {} ".format(  
             dato[0], dato[1], dato[2], dato[3], dato[4], dato[5], dato[6], dato[7], dato[8], dato[9]))  
@@ -121,7 +121,7 @@ def modificacion():
     mostrartodo()
     try:
         mod = int(input("Ingrese valor de ID del cliente que desea modificar : "))
-        datos = DAO.CRUDCliente.consultaparticular(mod)
+        datos = DAO.CrudCliente.consultaparticular(mod)
         if not datos:
             print("Cliente no encontrado.")
             return
@@ -143,7 +143,7 @@ def modificacion():
         cliente_modificado = Cliente(
             datos[1], nombre, apellido, direccion, fono, correo, datos[9], int(monto), deuda=datos[8]
         )
-        DAO.CRUDCliente.modificar(cliente_modificado)
+        DAO.CrudCliente.modificar(cliente_modificado)
         print("Cliente modificado exitosamente.")
     except ValueError:
         print("Entrada inválida. Por favor, ingrese un número.")
@@ -168,7 +168,7 @@ while True:
             mostrartodo()
             try:
                 eli = int(input("Ingrese valor del ID del cliente que desea eliminar : "))
-                DAO.CRUDCliente.eliminar(eli)
+                DAO.CrudCliente.eliminar(eli)
                 print("Cliente eliminado exitosamente.")
             except ValueError:
                 print("Entrada inválida. Por favor, ingrese un número.")
