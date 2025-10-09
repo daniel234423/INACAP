@@ -22,15 +22,14 @@ def agregar(c):
     except Exception as e:
         print("Error al agregar cliente:", e)
 
-def editar(c):
+def editar(c, id_cliente):
     try:
         con = Conexion(host, user, password, db)
         sql = """
-            UPDATE Cliente SET run=%s, nombre=%s, apellido=%s, direccion=%s, fono=%s,
-            correo=%s, monto_credito=%s, deuda=%s, id_tipo=%s WHERE id_cliente=%s
-        """
-        valores = (c.run, c.nombre, c.apellido, c.direccion, c.fono, c.correo, c.monto_credito, c.deuda, c.id_tipo, c.id_cliente)
-        con.ejecuta_query(sql, valores)
+            UPDATE Cliente SET run='{}', nombre='{}', apellido='{}', direccion='{}', fono='{}',
+            correo='{}', monto_credito={} WHERE id_cliente={}
+        """.format(c.run, c.nombre, c.apellido, c.direccion, c.fono, c.correo, c.montoCredito, int(id_cliente))
+        con.ejecuta_query(sql)
         con.commit()
         input("\n\nDatos modificados satisfactoriamente")
         con.desconectar()
@@ -40,8 +39,8 @@ def editar(c):
 def eliminar(id_cliente):
     try:
         con = Conexion(host, user, password, db)
-        sql = "DELETE FROM Cliente WHERE id_cliente=%s"
-        con.ejecuta_query(sql, (id_cliente,))
+        sql = "DELETE FROM Cliente WHERE id_cliente={}".format(id_cliente)
+        con.ejecuta_query(sql)
         con.commit()
         input("\n\nCliente eliminado satisfactoriamente")
         con.desconectar()
@@ -63,8 +62,8 @@ def mostrartodos():
 def consultaparticular(id_cliente):
     try:
         con = Conexion(host, user, password, db)
-        sql = "SELECT * FROM Cliente WHERE id_cliente=%s"
-        cursor = con.ejecuta_query(sql, (id_cliente,))
+        sql = "SELECT * FROM Cliente WHERE id_cliente={}".format(id_cliente)
+        cursor = con.ejecuta_query(sql)
         datos = cursor.fetchone()
         con.desconectar()
         return datos
@@ -72,7 +71,7 @@ def consultaparticular(id_cliente):
         con.rollback()
         print("Error en consulta particular:", e)
 
-def consultapartial(cant):
+def consultaparcial(cant):
     try:
         con = Conexion(host, user, password, db)
         sql = "SELECT * FROM Cliente"

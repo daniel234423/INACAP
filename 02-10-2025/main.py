@@ -80,7 +80,6 @@ def mostraruno():
     print("=========================")
     op = int(input("\n Ingrese valor del ID del Cliente que desea Mostrar los Datos : "))
     datos = DAO.CrudCliente.consultaparticular(op)
-    
     print("\n======================================")
     print(" MUESTRA DE DATOS DEL CLIENTE ")
     print("=========================")
@@ -135,9 +134,9 @@ def modificacion():
 
         # Actualizar cliente
         cliente_modificado = Cliente(
-            datos[1], nombre, apellido, direccion, fono, correo, datos[9], int(monto), deuda=datos[8]
+            datos[1], nombre, apellido, direccion, fono, correo, datos[9], int(monto),
         )
-        DAO.CrudCliente.modificar(cliente_modificado)
+        DAO.CrudCliente.editar(cliente_modificado, mod)
         print("Cliente modificado exitosamente.")
     except ValueError:
         print("Entrada inválida. Por favor, ingrese un número.")
