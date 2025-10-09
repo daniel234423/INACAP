@@ -14,7 +14,6 @@ def agregar(c):
         VALUES ('{c.run}', '{c.nombre}', '{c.apellido}', '{c.direccion}', '{c.fono}', '{c.correo}', {c.montoCredito}, {c.tipo})
         """
         con.ejecuta_query(sql)
-        print("AAAAAAAAAAAA", con.cursor.lastrowid)
         con.commit()
         print("\n\n¡Datos ingresados satisfactoriamente!")
         time.sleep(2)
