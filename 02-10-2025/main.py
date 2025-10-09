@@ -147,13 +147,13 @@ while True:
     menuprincipal()
     try:
         op = int(input(" INGRESE OPCIÓN : "))
-        if op == 1:
+        if op == 1 or op == 'C':
             ingresardatos()
-        elif op == 2:
+        elif op == 2 or op == 'R':
             mostrar()
-        elif op == 3:
+        elif op == 3 or op == 'U':
             modificacion()
-        elif op == 4:
+        elif op == 4 or op == 'D':
             os.system("cls")
             print("===============")
             print(" ELIMINAR CLIENTE ")
@@ -165,7 +165,7 @@ while True:
                 print("Cliente eliminado exitosamente.")
             except ValueError:
                 print("Entrada inválida. Por favor, ingrese un número.")
-        elif op == 5:
+        elif op == 5 or op == 'S':
             print("Gracias por usar el sistema")
             break
         else:
