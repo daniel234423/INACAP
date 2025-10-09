@@ -2,91 +2,93 @@ from DAO.Conexion import Conexion
 import time
 
 host = 'localhost'
-user = 'daniel'
-password = '234423'
-db = 'empresa'
+user = 'root'
+password = ''
+db = 'clase'
 
 def agregar(c):
     try:
         con = Conexion(host, user, password, db)
-        sql = (
-            "INSERT INTO cliente SET run='{}', nombre='{}', apellido='{}', direccion='{}', "
-            "fono='{}', correo='{}', montoCredito='{}', tipo='{}'"
-        ).format(
-            c.run, c.nombre, c.apellido, c.direccion,
-            c.fono, c.correo, c.montoCredito, c.tipo
-        )
+        sql = f"""
+        INSERT INTO Cliente (run, nombre, apellido, direccion, fono, correo, monto_credito, id_tipo)
+        VALUES ('{c.run}', '{c.nombre}', '{c.apellido}', '{c.direccion}', '{c.fono}', '{c.correo}', {c.montoCredito}, {c.tipo})
+        """
         con.ejecuta_query(sql)
+        print("AAAAAAAAAAAA", con.cursor.lastrowid)
         con.commit()
         print("\n\n¡Datos ingresados satisfactoriamente!")
         time.sleep(2)
         con.desconectar()
     except Exception as e:
         print("Error al agregar cliente:", e)
+
 def editar(c):
     try:
         con = Conexion(host, user, password, db)
-        sql="UPDATE CLIENTE SET run='{}',nombre='{}',apellido='{}',direccion='{}',fono={},correo='{}',"\
-        "montoCredito={},deuda={},TIPO_id={} WHERE id={} ".format(c[1],c[2],c[3],c[4],c[5],c[6],c[7],c[8],c[9],c[10])
-        con.ejecuta_query(sql)
+        sql = """
+            UPDATE Cliente SET run=%s, nombre=%s, apellido=%s, direccion=%s, fono=%s,
+            correo=%s, monto_credito=%s, deuda=%s, id_tipo=%s WHERE id_cliente=%s
+        """
+        valores = (c.run, c.nombre, c.apellido, c.direccion, c.fono, c.correo, c.monto_credito, c.deuda, c.id_tipo, c.id_cliente)
+        con.ejecuta_query(sql, valores)
         con.commit()
-        input("\n\n Datos Modificados Satisfactorcamente")
+        input("\n\nDatos modificados satisfactoriamente")
         con.desconectar()
     except Exception as e:
-        print(e)
+        print("Error al editar cliente:", e)
 
-def eliminar(id):
+def eliminar(id_cliente):
     try:
         con = Conexion(host, user, password, db)
-        sql = "DELETE FROM CLIENTE WHERE id={}".format(id)
-        con.ejecuta_query(sql)
+        sql = "DELETE FROM Cliente WHERE id_cliente=%s"
+        con.ejecuta_query(sql, (id_cliente,))
         con.commit()
-        input("\n\n Cliente Eliminado Satisfactorcamente ")
+        input("\n\nCliente eliminado satisfactoriamente")
         con.desconectar()
     except Exception as e:
-        print(e)
+        print("Error al eliminar cliente:", e)
+
 def mostrartodos():
     try:
         con = Conexion(host, user, password, db)
-        sql = "select * from CLIENTE "
-        cursor=con.ejecuta_query(sql)
-        datos=cursor.fetchall()
+        sql = "SELECT * FROM Cliente"
+        cursor = con.ejecuta_query(sql)
+        datos = cursor.fetchall()
         con.desconectar()
         return datos
     except Exception as e:
         con.rollback()
-        print(e)
+        print("Error al mostrar todos los clientes:", e)
 
-def consultaparticular(id):
+def consultaparticular(id_cliente):
     try:
         con = Conexion(host, user, password, db)
-        sql = "select * from CLIENTE where id=[]".format(id)
-        cursor=con.ejecuta_query(sql)
-        datos=cursor.fetchone()
+        sql = "SELECT * FROM Cliente WHERE id_cliente=%s"
+        cursor = con.ejecuta_query(sql, (id_cliente,))
+        datos = cursor.fetchone()
         con.desconectar()
         return datos
     except Exception as e:
         con.rollback()
-        print(e)
+        print("Error en consulta particular:", e)
 
 def consultapartial(cant):
     try:
         con = Conexion(host, user, password, db)
-        sql = "select * from CLIENTE "
+        sql = "SELECT * FROM Cliente"
         cursor = con.ejecuta_query(sql)
         datos = cursor.fetchmany(size=cant)
         con.desconectar()
         return datos
     except Exception as e:
         con.rollback()
-        print(e)
+        print("Error en consulta parcial:", e)
 
-# ---
 def mostrartipos():
     con = None
     try:
         con = Conexion(host, user, password, db)
-        sql = "SELECT id, nombre FROM TIPO"
+        sql = "SELECT id_tipo, descripcion FROM TipoUsuario"
         cursor = con.ejecuta_query(sql)
         datos = cursor.fetchall()
         con.desconectar()
@@ -94,5 +96,5 @@ def mostrartipos():
     except Exception as e:
         if con:
             con.rollback()
-        print(f"Error: {e}")
-        return []  # Devuelve una lista vacía en lugar de None
+        print(f"Error al mostrar tipos de usuario: {e}")
+        return []

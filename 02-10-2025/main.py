@@ -5,7 +5,6 @@ from DTO.Tipo import TipoUsuario
 from DTO.Cliente import Cliente
 
 def menuprincipal(): 
-    os.system('cls')
     print("---")
     print("    M E N Ú   P R I N C I P A L  ")
     print("---")
@@ -17,7 +16,6 @@ def menuprincipal():
     print("---")
 
 def menumostrar(): 
-    os.system('cls')
     print("---")
     print("    M E N Ú   M O S T R A R  ")
     print("---")
@@ -28,7 +26,6 @@ def menumostrar():
     print("---")
 
 def ingresardatos(): 
-    os.system('cls')
     print("---")
     print("    INGRESAR DATOS CLIENTE    ")
     print("---")
@@ -48,8 +45,8 @@ def ingresardatos():
     
     tipo = int(input("Ingrese el código del Tipo de cliente: "))
     monto = int(input("INGRESE MONTO CRÉDITO : "))
-    c = Cliente(run, nombre, apellido, direccion, fono, correo, tipo, monto)
-    print(c)
+    c = Cliente(run, nombre, apellido, direccion, fono, correo, tipo, montocredito=monto)
+    print(c.montoCredito)
     DAO.CrudCliente.agregar(c)
 def mostrar():
     while(True):
@@ -68,7 +65,6 @@ def mostrar():
             print("Opción Fuera de Rango")
 
 def mostrartodo():
-    os.system("cls")
     print("===============")
     print(" LISTA DE TODOS LOS CLIENTES ")
     print("===============")
@@ -79,7 +75,6 @@ def mostrartodo():
     print("---")
 
 def mostraruno():
-    os.system('cls')
     print("=========================")
     print(" MUESTRA DE DATOS PARTICULAR ")
     print("=========================")
@@ -102,7 +97,6 @@ def mostraruno():
     print("=========================")
     input("\n\n PRESIONE ENTER PARA CONTINUAR")
 def mostrarparcial():  
-    os.system("cls")  
     print("---")  
     print(" MUESTRA PARCIALMENTE LOS CLIENTES ")  
     print("---")  
@@ -114,7 +108,6 @@ def mostrarparcial():
         print("---")  
     input("\n\n PRESIONE ENTER PARA CONTINUAR")
 def modificacion():
-    os.system("cls")
     listanuevos = []
     print("---")
     print(" MODIFICACIÓN DE CLIENTE ")
