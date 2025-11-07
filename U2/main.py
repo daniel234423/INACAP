@@ -2,6 +2,8 @@ import os
 import DAO.CRUDCliente
 from DTO.Tipo import Tipo_Usuario
 from DTO.Cliente import Cliente
+from DTO.Usuarios import Usuario
+import getpass
 
 def menuprincipal():
     os.system('cls')
@@ -117,9 +119,9 @@ def modificardatos():
     print("===================================")
     print("     MODULO MODIFICAR CLIENTE")
     print("===================================")
+    mostrartodo()
     mod = int(input("\n Ingrese valor de ID del Cliente que desea Modificar : "))
     datos = DAO.CRUDCliente.consultaparticular(mod)
-    mostrartodo()
     print(" ID               : {} ".format(datos[0]))
     listanuevos.append(datos[0])
     print(" RUN              : {} ".format(datos[1]))
@@ -198,21 +200,80 @@ def eliminardatos():
     elim = int(input("Ingrese valor de ID del Cliente que desea Eliminar : "))
     DAO.CRUDCliente.eliminar(elim)
 
+def menuUsuaruio():
+    os.system('cls')
+    print("===================================")
+    print("        M E N Ú  U S U A R I O")
+    print("===================================")
+    print("1.- LOGIN")
+    print("2.- REGISTRAR USUARIO")
+    print("3.- SALIR")
+    print("===================================")
+
+def ingresoUsuarios():
+    os.system('cls')
+    print("==============================================")
+    print("       INGRESO DE USUARIO")
+    print("==============================================")
+    username = input( "INGRESE NOMBRE DE USUARIO: ")
+    # Verificamos que las contraseñas sean iguales
+    while True:
+        clave1 = getpass.getpass( "INGRESE PASSWORD      : ")
+        clave2 = getpass.getpass( "REPITA PASSWORD      : ")
+        if clave1 == clave2:
+            break
+    nombre = input( "INGRESE NOMBRE       : ")
+    apellidos = input("INGRESE APELLIDOS    : ")
+    correo = input( "INGRESE CORREO       : ")
+    print("-------------------------------------------- TIPOS DE USUARIOS ------")
+    print(" 1 para Administrador ")
+    print(" 2 para Vendedor ")
+    tipo = int(input("----- Ingrese Nº : "))
+    print("---------------------------------------------")
+    if tipo == 1:
+        tipo = "Administrador"
+    else:
+        tipo = "Vendedor"
+    Usuario.registrar_usuario(username,clave1,nombre,apellidos,correo,tipo)
+    print("==============================================")
 
 while(True):
-    menuprincipal()
-    op = int(input(" INGRESE OPCIÓN : "))
-    if op==1:
-        ingresardatos()
-    elif op==2:
-        mostrar()
-    elif op==3:
-        modificardatos()
-    if op==4:
-        eliminardatos()
-    if op==5:
-        op2 = input("DESEA SALIR [SI/NO] :")
-        if op2.lower() == "si":
-            exit()
-    else:
-        print("Opción Fuera de Rango")
+    menuUsuaruio()
+    try:
+        opUsu = int(input("  INGRESE OPCIÓN  :  "))
+        if opUsu==1:
+            user = input("Ingrese nombre de usuario: ")
+            clave = getpass.getpass("Ingrese password: ")
+            usuario = Usuario.login(user,clave)
+            if not usuario:
+                input("...Usuario No Registrado!")
+            else:
+                print(f"Bienvenido {usuario.nombre.upper()} {usuario.apellido.upper()}")
+                input("....Presiona ENTER para ingresar al Menú Principal.")
+                menuprincipal()
+                op = int(input("  INGRESE OPCIÓN  : "))
+                if op==1:
+                    ingresardatos()
+                elif op==2:
+                    mostrar()
+                elif op==3:
+                    modificardatos()
+                if op==4:
+                    eliminardatos()
+                if op==5:
+                    op2 = input("DESEA SALIR [SI/NO] : ")
+                    if op2.lower() == "si":
+                        exit()
+                else:
+                    print("Opción Fuera de Rango")
+        elif opUsu==2:
+            ingresoUsuarios()
+            input("....Presione ENTER continuar ")
+        else:
+            opSalir = input("DESEA SALIR [SI/NO] : ")
+            if opSalir.lower() == "si":
+                exit()
+    except Exception as e:
+        print("Datos Inválidos, Intente Nuevamente")
+        input("\nPRESIONE ENTER PARA CONTINUAR")
+        print(e)

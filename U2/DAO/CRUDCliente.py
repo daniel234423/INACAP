@@ -2,7 +2,7 @@ from DAO.Conexion import Conexion
 
 host = 'localhost'
 user = 'root'
-password = ''
+password = "234423"
 db = 'poo_bd'
 
 def agregar(c):
