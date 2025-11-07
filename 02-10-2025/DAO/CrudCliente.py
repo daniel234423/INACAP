@@ -3,7 +3,7 @@ import time
 
 host = 'localhost'
 user = 'root'
-password = "234423"
+password = ''
 db = 'clase'
 
 def agregar(c):

@@ -3,7 +3,7 @@ import bcrypt
 
 host = 'localhost'
 user = 'root'
-password = "234423"
+password = ''
 db = 'poo_bd'
 
 class Usuario:
