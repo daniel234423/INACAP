@@ -7,7 +7,7 @@ class CrudUsuario:
     def __init__(self):
         self.conexion = Conexion()
         
-    def AgregarUsuario(self, usuario:Usuario):
+    def Registrarse(self, usuario:Usuario):
         try:
             cursor = self.conexion.db.cursor()
             sql = "INSERT INTO usuario (nombre, apellido, email, run, fono, username, password_hash, id_rol) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
@@ -20,7 +20,7 @@ class CrudUsuario:
             self.conexion.db.rollback()
             return None
     
-    def ObtenerUsuarioPorUsername(self, username: str):
+    def Mostrar(self, username: str):
         try:
             cursor = self.conexion.db.cursor()
             sql = "SELECT u.id, u.nombre, u.apellido, u.email, u.run, u.fono, u.username, u.password_hash, r.id, r.tipo_rol FROM usuario u JOIN rol r ON u.id_rol = r.id WHERE u.username = %s"
@@ -49,7 +49,7 @@ class CrudUsuario:
     
     def IniciarSesion(self, username: str, password: str):
         try:
-            usuario = self.ObtenerUsuarioPorUsername(username)
+            usuario = self.Mostrar(username)
             if not usuario:
                 return None
 
@@ -63,3 +63,4 @@ class CrudUsuario:
         except Exception as e:
             print(f"Error al iniciar sesión: {e}")
             return None
+        
